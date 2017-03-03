@@ -3,6 +3,7 @@ cat /tmp/nginx.conf.template \
   | \
     envsubst '\
     \$WEB_DOMAIN \
+    \$WEB_SOCKET_NAME \
   ' \
   > /etc/nginx/nginx.conf
 

@@ -1,4 +1,3 @@
-
 FROM nginx:1.11.3
 
 # Generate nginx config file from template

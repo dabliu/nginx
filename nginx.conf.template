@@ -1,6 +1,6 @@
 user www-data;
 worker_processes 1;
-error_log /var/log/nginx/error.log warn;
+error_log /var/log/nginx/error.log debug;
 pid /var/run/nginx.pid;
 
 events {
@@ -25,10 +25,10 @@ http {
 
   ## Logging Settings
   access_log /var/log/nginx/access.log;
-  error_log /var/log/nginx/error.log;
+  error_log /var/log/nginx/error.log debug;
 
   upstream web_upstream {
-    server unix:///tmp/socks/web fail_timeout=0;
+    server unix:///tmp/sockets/${WEB_SOCKET_NAME}.sock fail_timeout=0;
   }
 
   server {
@@ -38,7 +38,8 @@ http {
     root /sources/web/public;
 
     # try to serve static file first
-    try_files $uri $uri/ $uri/index.html $uri.html @app;
+    #try_files $uri $uri/ $uri/index.html $uri.html @app;
+    try_files $uri $uri/index.html $uri.html @app;
 
     location ~* \.(css|js|png|gif|jpg|svg|html)$ {
       expires max;
